@@ -46,6 +46,27 @@
 
 ---
 
+## Інструкція із запуску
+ 
+1. Клонувати репозиторій:
+```bash
+git clone https://github.com/YOUR_USERNAME/MobileLabsRN2026.git
+cd MobileLabsRN2026/lab4
+```
+ 
+2. Встановити залежності:
+```bash
+npm install
+```
+ 
+3. Запустити проєкт:
+```bash
+npx expo start
+```
+ 
+4. Відсканувати QR-код додатком **Expo Go** на телефоні (Примітка: Для уникнення помилок deprecated API у коді використовується імпорт expo-file-system/legacy)
+---
+ 
 ## Скріншоти
  
 | Головний екран | Створення папки | Створення файлу | Перегляд файлу | Редагування файлу | Підтвердження видалення | Детальна інформація | Навігація в папці |
@@ -53,10 +74,48 @@
 | ![Home screen](screenshots/Home_screen.jpg) | ![Dir create](screenshots/Dir_create.jpg) | ![File create](screenshots/File_create.jpg) | ![View file](screenshots/View_file.jpg) | ![Modification file](screenshots/Modification_file.jpg) | ![Approved delete](screenshots/Approved_delete.jpg) | ![Deteiled info](screenshots/Deteiled_info.jpg) | ![Navigation dir](screenshots/Navigation_dir.jpg) |
  
 ---
+ 
+## Висновки (відповіді на контрольні запитання)
+ 
+### 1. Які основні можливості надає expo-file-system?
+ 
+Бібліотека дозволяє: читати/записувати файли, створювати/видаляти папки, отримувати інформацію про файл (розмір, дата зміни), дізнаватися про стан дискової пам’яті пристрою.
+ 
+### 2. У чому різниця між readAsStringAsync та writeAsStringAsync?
+ 
+`readAsStringAsync` — асинхронно читає вміст файлу у рядок
+`writeAsStringAsync` — записує рядок у файл (перезаписує або створює)
+ 
+### 3. Як отримати розмір вільного місця на диску?
+ 
+`import * as FileSystem from 'expo-file-system/legacy';`
+`const free = await FileSystem.getFreeDiskStorageAsync();`
+`const total = await FileSystem.getTotalDiskCapacityAsync();`
 
-## Інструкція із запуску
-
-1. Клонувати репозиторій:
-```bash
-git clone https://github.com/YOUR_USERNAME/MobileLabsRN2026.git
-cd MobileLabsRN2026/lab4
+### 4. Чому потрібне підтвердження перед видаленням?
+ 
+Щоб уникнути випадкового знищення даних користувача. У застосунку реалізовано через `Alert.alert` з кнопками "Скасувати" / "Видалити".
+ 
+### 5. Як відрізнити файл від папки?
+ 
+За допомогою `FileSystem.getInfoAsync()` — властивість `isDirectory` (true для папок, false для файлів).
+ 
+### 6. Чому у коді використовується /legacy імпорт?
+ 
+Починаючи з `expo-file-system` SDK 50+, старе API є deprecated. Для збереження сумісності з кодом, написаним під старе API, необхідно імпортувати методи з `'expo-file-system/legacy'`, інакше програма викине помилку у рантаймі.
+---
+ 
+## Використані технології
+ 
+| Технологія | Версія | Призначення |
+|---|---|---|
+| React Native | 0.81.5 | Основний фреймворк |
+| Expo | ~54.0.33 | Середовище розробки |
+| react-native-gesture-handler | ~2.28.0 | Обробка жестів |
+| @react-navigation/bottom-tabs | ^7.15.11 | Навігація |
+ 
+---
+ 
+## Джерела
+ 
+- https://docs.expo.dev/versions/latest/sdk/filesystem/
