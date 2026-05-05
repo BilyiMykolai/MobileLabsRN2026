@@ -47,7 +47,7 @@ npx expo start
  
 | Головний екран (світла тема) | Головний екран (темна тема) | Завдання | Налаштування |
 |---|---|---|---|
-| ![Game Light](screenshots/game_light.jpg) | ![Game Dark](screenshots/game_dark.jpg) | ![Challenges](screenshots/challenges.jpg) | ![Settings](screenshots/settings.jpg) |
+| ![Game Light](screenshoots/game_light.jpg) | ![Game Dark](screenshoots/game_dark.jpg) | ![Challenges](screenshoots/challenges.jpg) | ![Settings](screenshoots/settings.jpg) |
  
 ---
  
