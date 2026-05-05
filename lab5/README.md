@@ -46,7 +46,7 @@
 
 | Вхід | Реєстрація | Каталог | Деталі |
 |------|------------|---------|--------|
-| ![Вхід](screenshots/login.png) | ![Реєстрація](screenshots/register.png) | ![Каталог](screenshots/catalog.png) | ![Деталі](screenshots/details.png) |
+| ![Вхід](screenshots/login.jpg) | ![Реєстрація](screenshots/register.jpg) | ![Каталог](screenshots/catalog.jpg) | ![Деталі](screenshots/details.jpg) |
 
 ---
 
