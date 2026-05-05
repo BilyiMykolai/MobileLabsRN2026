@@ -25,7 +25,7 @@ export default function HomeScreen() {
           </View>
         )}
         ListFooterComponent={
-          <Text style={styles.footer}>Білий Микола Олексійович, ІПЗ 22-2</Text>
+          <Text style={styles.footer}>Білий Микола Миколайович, ІПЗ 22-2</Text>
         }
       />
     </View>
