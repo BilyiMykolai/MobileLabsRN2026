@@ -45,7 +45,7 @@
 
 | Вхід | Реєстрація | Профіль | Редагування | Процес відновлення паролю |
 |------|------------|---------|-------------|-------------------|
-| ![Вхід](screenshots/login.png) | ![Реєстрація](screenshots/register.png) | ![Профіль](screenshots/home.png) | ![Редагування](screenshots/profile.png) | ![Пароль](screenshots/forgot.png) ![Пароль](screenshots/forgot1.png)![Пароль](screenshots/forgot2.png)|
+| ![Вхід](screenshots/login.jpg) | ![Реєстрація](screenshots/register.jpg) | ![Профіль](screenshots/home.jpg) | ![Редагування](screenshots/profile.jpg) | ![Пароль](screenshots/forgot.jpg) ![Пароль](screenshots/forgot1.jpg)![Пароль](screenshots/forgot2.jpg)|
 
 ---
 
