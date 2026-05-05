@@ -51,7 +51,7 @@
 | Головна | Фотогалерея | Профіль |
 |---------|-------------|---------|
 | ![Головна](screenshots/home.jpg) | ![Фотогалерея](screenshots/gallery.jpg) | ![Профіль](screenshots/profile.jpg) |
-| ![Головна](screenshots/home1.jpg) | ![Фотогалерея](screenshots/gallery1.jpg) | |
+| ![Головна](screenshots/home1.jpg) | ![Фотогалерея](screenshots/gallery2.jpg) | |
 ---
 
 ## Способи запуску мобільного додатка
