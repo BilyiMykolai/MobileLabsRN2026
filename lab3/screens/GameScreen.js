@@ -1,17 +1,73 @@
 import React, { useState, useRef } from 'react';
-import {
-  View, Text, StyleSheet, Animated, Dimensions,
-} from 'react-native';
+import styled from 'styled-components/native';
+import { Dimensions } from 'react-native';
 import {
   GestureDetector, Gesture, GestureHandlerRootView,
 } from 'react-native-gesture-handler';
+import { Animated } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
+
+const Container = styled.View`
+  flex: 1;
+  background-color: ${props => props.bg || '#f5f5f5'};
+`;
+
+const ScoreBox = styled.View`
+  align-items: center;
+  padding-top: 40px;
+`;
+
+const ScoreLabel = styled.Text`
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #888;
+`;
+
+const ScoreValue = styled.Text`
+  font-size: 64px;
+  font-weight: bold;
+  color: #000;
+`;
+
+const FloatText = styled.Text`
+  position: absolute;
+  top: 35%;
+  align-self: center;
+  font-size: 28px;
+  font-weight: bold;
+`;
+
+const LegendBox = styled.View`
+  position: absolute;
+  bottom: 24px;
+  left: 16px;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  elevation: 4;
+`;
+
+const LegendText = styled.Text`
+  font-size: 13px;
+  color: #333;
+  margin-vertical: 2px;
+`;
+
+const ClickerEmoji = styled.Text`
+  font-size: 36px;
+`;
+
+const ClickerLabel = styled.Text`
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  margin-top: 2px;
+`;
 
 export default function GameScreen({ score, setScore, challenges, updateChallenge, theme }) {
   const [floats, setFloats] = useState([]);
 
-  // Використовуємо звичайний Animated замість reanimated
   const posX = useRef(new Animated.Value(width / 2 - 60)).current;
   const posY = useRef(new Animated.Value(height / 2 - 200)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
@@ -41,7 +97,6 @@ export default function GameScreen({ score, setScore, challenges, updateChalleng
     });
   };
 
-  // Single tap
   const tapGesture = Gesture.Tap()
     .runOnJS(true)
     .onEnd(() => {
@@ -51,7 +106,6 @@ export default function GameScreen({ score, setScore, challenges, updateChalleng
       if (tapCount.current <= 10) updateChallenge('tap10', tapCount.current);
     });
 
-  // Double tap
   const doubleTapGesture = Gesture.Tap()
     .numberOfTaps(2)
     .runOnJS(true)
@@ -62,7 +116,6 @@ export default function GameScreen({ score, setScore, challenges, updateChalleng
       if (doubleTapCount.current <= 5) updateChallenge('doubleTap5', doubleTapCount.current);
     });
 
-  // Long press
   const longPressGesture = Gesture.LongPress()
     .minDuration(3000)
     .runOnJS(true)
@@ -72,7 +125,6 @@ export default function GameScreen({ score, setScore, challenges, updateChalleng
       updateChallenge('longPress', true);
     });
 
-  // Pan (drag)
   const startX = useRef(0);
   const startY = useRef(0);
   const panGesture = Gesture.Pan()
@@ -89,7 +141,6 @@ export default function GameScreen({ score, setScore, challenges, updateChalleng
       updateChallenge('pan', true);
     });
 
-  // Swipe right
   const flingRightGesture = Gesture.Fling()
     .direction(1)
     .runOnJS(true)
@@ -100,7 +151,6 @@ export default function GameScreen({ score, setScore, challenges, updateChalleng
       updateChallenge('swipeRight', true);
     });
 
-  // Swipe left
   const flingLeftGesture = Gesture.Fling()
     .direction(2)
     .runOnJS(true)
@@ -111,7 +161,6 @@ export default function GameScreen({ score, setScore, challenges, updateChalleng
       updateChallenge('swipeLeft', true);
     });
 
-  // Pinch
   const pinchGesture = Gesture.Pinch()
     .runOnJS(true)
     .onUpdate((e) => {
@@ -126,7 +175,6 @@ export default function GameScreen({ score, setScore, challenges, updateChalleng
       updateChallenge('pinch', true);
     });
 
-  // Compose gestures
   const composed = Gesture.Simultaneous(
     Gesture.Exclusive(doubleTapGesture, tapGesture),
     longPressGesture,
@@ -135,34 +183,35 @@ export default function GameScreen({ score, setScore, challenges, updateChalleng
     pinchGesture,
   );
 
-  const s = styles(theme);
-
   return (
-    <GestureHandlerRootView style={s.container}>
-      <View style={s.scoreBox}>
-        <Text style={s.scoreLabel}>SCORE</Text>
-        <Text style={s.scoreValue}>{score}</Text>
-      </View>
+    <Container bg={theme?.bg}>
+      <ScoreBox>
+        <ScoreLabel>SCORE</ScoreLabel>
+        <ScoreValue>{score}</ScoreValue>
+      </ScoreBox>
 
       <GestureDetector gesture={composed}>
-        <Animated.View style={[s.clicker, {
+        <Animated.View style={{
+          width: 120, height: 120, borderRadius: 60,
+          backgroundColor: '#007AFF', justifyContent: 'center',
+          alignItems: 'center', elevation: 8,
+          position: 'absolute',
           transform: [
             { translateX: posX },
             { translateY: posY },
             { scale: scaleAnim },
           ],
-          position: 'absolute',
-        }]}>
-          <Text style={s.clickerEmoji}>👆</Text>
-          <Text style={s.clickerText}>TAP ME</Text>
+        }}>
+          <ClickerEmoji>👆</ClickerEmoji>
+          <ClickerLabel>TAP ME</ClickerLabel>
         </Animated.View>
       </GestureDetector>
 
       {floats.map(f => (
-        <Text key={f.id} style={[s.float, { color: f.color }]}>{f.text}</Text>
+        <FloatText key={f.id} style={{ color: f.color }}>{f.text}</FloatText>
       ))}
 
-      <View style={s.legend}>
+      <LegendBox>
         {[
           ['👆', 'Tap: +1 point'],
           ['👆', 'Double-tap: +2 points'],
@@ -170,31 +219,9 @@ export default function GameScreen({ score, setScore, challenges, updateChalleng
           ['👋', 'Swipe: +1-10 random points'],
           ['🔍', 'Pinch: +3 points'],
         ].map(([icon, text], i) => (
-          <Text key={i} style={s.legendText}>{icon} {text}</Text>
+          <LegendText key={i}>{icon} {text}</LegendText>
         ))}
-      </View>
-    </GestureHandlerRootView>
+      </LegendBox>
+    </Container>
   );
 }
-
-const styles = (theme) => StyleSheet.create({
-  container: { flex: 1, backgroundColor: theme.bg },
-  scoreBox: { alignItems: 'center', paddingTop: 40 },
-  scoreLabel: { fontSize: 12, color: theme.sub, letterSpacing: 2 },
-  scoreValue: { fontSize: 64, fontWeight: 'bold', color: theme.text },
-  clicker: {
-    width: 120, height: 120, borderRadius: 60,
-    backgroundColor: '#007AFF', justifyContent: 'center',
-    alignItems: 'center', elevation: 8,
-    shadowColor: '#007AFF', shadowOpacity: 0.5, shadowRadius: 10,
-  },
-  clickerEmoji: { fontSize: 36 },
-  clickerText: { color: '#fff', fontSize: 11, fontWeight: 'bold', marginTop: 2 },
-  float: { position: 'absolute', top: '35%', alignSelf: 'center', fontSize: 28, fontWeight: 'bold' },
-  legend: {
-    position: 'absolute', bottom: 24, left: 16,
-    backgroundColor: theme.card, borderRadius: 12, padding: 12,
-    elevation: 4,
-  },
-  legendText: { fontSize: 13, color: theme.text, marginVertical: 2 },
-});
